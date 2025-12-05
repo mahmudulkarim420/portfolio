@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { IoHomeOutline } from 'react-icons/io5';
 import { FaLaptopCode } from 'react-icons/fa6';
@@ -7,6 +7,8 @@ import { HiOutlineMail } from 'react-icons/hi';
 import logo from '../../assets/logo.png';
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false); // dropdown state
+
   const links = [
     {
       name: (
@@ -42,6 +44,10 @@ const Navbar = () => {
     },
   ];
 
+  const handleLinkClick = () => {
+    setIsOpen(false); // route change হলে dropdown close
+  };
+
   return (
     <nav className="sticky top-4 z-50 flex justify-center">
       <div
@@ -74,8 +80,12 @@ const Navbar = () => {
           ))}
         </ul>
 
-        <div className="lg:hidden relative dropdown">
-          <label tabIndex={0} className="btn btn-ghost text-white">
+        {/* Mobile dropdown */}
+        <div className="lg:hidden relative">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="btn btn-ghost text-white"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -90,28 +100,30 @@ const Navbar = () => {
                 d="M4 6h16M4 12h16M4 18h16"
               />
             </svg>
-          </label>
+          </button>
 
-          <ul
-            tabIndex={0}
-            className="menu dropdown-content absolute right-0 mt-2 p-4 shadow-xl
-    bg-blue-900/95 rounded-xl w-48 border border-blue-700/40 z-50"
-          >
-            {links.map((link) => (
-              <li key={link.name}>
-                <NavLink
-                  to={link.path}
-                  className={({ isActive }) =>
-                    isActive
-                      ? 'text-blue-400 font-semibold'
-                      : 'text-gray-100 hover:text-blue-400 transition duration-200'
-                  }
-                >
-                  {link.name}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
+          {isOpen && (
+            <ul
+              className="absolute right-0 mt-2 p-4 shadow-xl
+              bg-blue-900/95 rounded-xl w-48 border border-blue-700/40 z-50"
+            >
+              {links.map((link) => (
+                <li key={link.name}>
+                  <NavLink
+                    to={link.path}
+                    onClick={handleLinkClick} // close dropdown
+                    className={({ isActive }) =>
+                      isActive
+                        ? 'text-blue-400 font-semibold'
+                        : 'text-gray-100 hover:text-blue-400 transition duration-200'
+                    }
+                  >
+                    {link.name}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </nav>
