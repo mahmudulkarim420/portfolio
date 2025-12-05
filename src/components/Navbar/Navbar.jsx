@@ -4,6 +4,7 @@ import { IoHomeOutline } from 'react-icons/io5';
 import { FaLaptopCode } from 'react-icons/fa6';
 import { FaCode } from 'react-icons/fa';
 import { HiOutlineMail } from 'react-icons/hi';
+import logo from '../../assets/logo.png';
 
 const Navbar = () => {
   const links = [
@@ -50,7 +51,7 @@ const Navbar = () => {
         transition-all duration-300 hover:shadow-2xl"
       >
         <NavLink to="/" className="text-xl font-bold text-white lg:hidden">
-          Mahmudul Karim
+          <img src={logo} alt="Logo" className="h-10 rounded-full" />
         </NavLink>
 
         <ul className="hidden lg:flex items-center gap-8">
